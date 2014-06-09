@@ -174,7 +174,9 @@ from time import sleep
 def waitDownload(s=1):
     while isDownloadFinished() is False:
         sleep(s); pass
-    
+
+#todo possibly keep track of what was downloaded
+#by keeping track of what this function has downloaded
 def download(yr,mo,geo='All',varsList=default_fields
              ,wait=True):
     #waits for a previous download to finish
