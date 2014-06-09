@@ -1,3 +1,13 @@
+"""
+programmatically downloads csv files from the BTS airline data
+
+call init() first
+most likely you'll just want:
+download(yr,mo) or downloadAll()
+then procDownloads()
+
+"""
+
 import browser as b
 
 from selenium import selenium
@@ -147,8 +157,6 @@ def get_downloadElem():
 def clickDownload(): get_downloadElem().click()
 
 
-#todo a table is defined by its variables, make hash of vars for the
-#file name just string together the var names?
 
 #trying not to have any derived fields
 default_fields=['Year','Month','DayofMonth'
@@ -191,13 +199,7 @@ def download(yr,mo,geo='All',varsList=default_fields
 
 
 import scrape_config
-# import hashlib
-# import os
-# def uniquefn(yr,mo,geo):
-#     return hashlib.md5(str(yr)+str(mo)+str(geo)).hexdigest()
-# def procDownload(yr,mo,geo):
-#     dlfp=os.path.join(scrape_config.browser_download_dir
-#         ,os.listdir(scrape_config.browser_download_dir)[0]
+
 import os
 def isDownloadFinished():
     #VERY HACKY!
@@ -216,6 +218,50 @@ def downloadAll(niceness=0):
             download(ayr,amo,geo=geo,wait=True)
             sleep(niceness)
     return
+
+from zipfile import ZipFile as Zf
+def extract():
+    for adir,dontcare,files in os.walk(scrape_config.browser_download_dir):
+        for afile in files:
+            afn=os.path.join(adir,afile)
+            if ('zip' and 'ONTIME' in afn) and ('download' not in afn):
+                zf=Zf(afn)
+                for acf in zf.namelist():
+                    if 'ONTIME' in acf:
+                        #zf.extract(acf, path=scrape_config.extract_to)
+                        yield zf.read(acf)
+                zf.close()
+
+
+import hashlib
+from StringIO import StringIO
+def uniqueFile(csvstr):
+    """first two lines of file should uniquely id the downloaded file
+    but im being lazy and just giving it the whole csv"""
+    return hashlib.md5(csvstr).hexdigest()[:10]
+def uniqueVars(firstline):
+    """this identifies a set of variables"""
+    return hashlib.md5(firstline).hexdigest()[:10]
+
+
+def procDownloads():
+    """processes downloaded files"""  
+    for extracted in extract():
+        write(extracted)
+
+def write(extracted):
+    """writes a csv str to the appropriate place"""
+    uv=uniqueVars(StringIO(extracted).next())
+    uf=uniqueFile(extracted)
+    ed=os.path.join(scrape_config.extract_to,uv)
+    ef=os.path.join(ed,uf)
+    if uv not in os.listdir(scrape_config.extract_to):
+        os.mkdir(ed)
+    if uf not in os.listdir(ed):
+        with open(ef,'w') as f:
+            f.write(extracted)
+    
     
 
-#todo set download dir in config
+
+
