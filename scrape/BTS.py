@@ -3,8 +3,7 @@ programmatically downloads csv files from the BTS airline data
 
 call init() first
 most likely you'll just want:
-download(yr,mo) or downloadAll()
-then procDownloads()
+download(yr,mo) or downloadAll(proc=True)
 
 """
 
@@ -211,11 +210,12 @@ def isDownloadFinished():
     return True
 
 
-def downloadAll(niceness=0):
+def downloadAll(niceness=1,proc=True):
     geo='All'
     for ayr in f2c2e['XYEAR']:
         for amo in f2c2e['FREQUENCY']:
             download(ayr,amo,geo=geo,wait=True)
+            if proc==True: procDownloads()
             sleep(niceness)
     return
 
@@ -229,7 +229,7 @@ def extract():
                 for acf in zf.namelist():
                     if 'ONTIME' in acf:
                         #zf.extract(acf, path=scrape_config.extract_to)
-                        yield zf.read(acf)
+                        yield zf,zf.read(acf)
                 zf.close()
 
 
@@ -244,10 +244,15 @@ def uniqueVars(firstline):
     return hashlib.md5(firstline).hexdigest()[:10]
 
 
-def procDownloads():
+def procDownloads(delfiles=True):
     """processes downloaded files"""  
-    for extracted in extract():
+    for zfobj,extracted in extract():
         write(extracted)
+        if delfiles==True:
+            zfp=zfobj.fp.name
+            zfobj.close()
+            os.remove(zfp)
+        else: zfobj.close()
 
 def write(extracted):
     """writes a csv str to the appropriate place"""
