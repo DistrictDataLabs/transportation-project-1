@@ -1,6 +1,6 @@
 # Byte-compiled  optimized  DLL files
 __pycache__
-.py[cod]
+.py[cod~]
 
 # C extensions
 .so
@@ -12,8 +12,8 @@ build
 develop-eggs
 dist
 eggs
-lib
-lib64
+#lib
+#lib64
 parts
 sdist
 var
