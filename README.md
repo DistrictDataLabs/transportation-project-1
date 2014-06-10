@@ -1,3 +1,4 @@
-transportation-project-1
-========================
-todo: might be a good idea to mirror the /folder/ structure in the code repo with the folder structure in the shared folder.
+setup
+=====
+1. shared folder. (and look at rootfolder.md)
+2. 
