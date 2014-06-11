@@ -269,6 +269,15 @@ def write(extracted):
             f.write(extracted)
     
     
-
+def walk_extractedFiles():
+    """yields varuniques then the data file names"""
+    w=os.walk(scrape_config.extract_to)
+    w.next() #dont care about files at the level
+    for auniqueVarSet, shouldbeNothing, datafiles in w:
+        pathtoset, varset = os.path.split(auniqueVarSet)
+        yield varset
+        for af in datafiles:
+            yield os.path.join(auniqueVarSet,af)
+    
 
 
