@@ -4,6 +4,8 @@ __pycache__
 
 #emacs files
 *~
+\#*#
+#hah have to escape the pound sign?
 
 # C extensions
 *.so
