@@ -3,8 +3,10 @@ from resources import dirs
 import os
 
 
-def gen_DBpth(dbtype):
-    return os.path.join(dirs['data_store']
+import db
+
+def gen_DBpth(dbobj):
+    if type(dbobj) is db.sqlite3 os.path.join(dirs['data_store']
                         ,'data/scraped/bts/load.'+dbtype) 
 
 def locate_DB():
