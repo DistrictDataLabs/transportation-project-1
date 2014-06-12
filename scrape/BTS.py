@@ -275,9 +275,9 @@ def walk_extractedFiles():
     w.next() #dont care about files at the level
     for auniqueVarSet, shouldbeNothing, datafiles in w:
         pathtoset, varset = os.path.split(auniqueVarSet)
-        yield varset
-        for af in datafiles:
-            yield os.path.join(auniqueVarSet,af)
+        yield (varset
+               ,(os.path.join(auniqueVarSet,af) for af in datafiles))
+        
     
 
 
