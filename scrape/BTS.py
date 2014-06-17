@@ -168,7 +168,117 @@ default_fields=['Year','Month','DayofMonth'
                 ,'CRSElapsedTime','ActualElapsedTime',
                 ]
 
+all_fields=[
+'Year',
+'Quarter',
+'Month',
+'DayofMonth',
+'DayOfWeek',
+'FlightDate',
 
+'UniqueCarrier',
+'AirlineID',
+'Carrier',
+'TailNum',
+'FlightNum',
+'Origin',
+'OriginAirportID',
+'OriginAirportSeqID',
+'OriginCityMarketID',
+
+'OriginCityName',
+'OriginState',
+'OriginStateFips',
+'OriginStateName',
+'OriginWac',
+
+'DestAirportID',
+'DestAirportSeqID',
+'DestCityMarketID',
+'Dest',
+'DestCityName',
+'DestState',
+'DestStateFips',
+'DestStateName',
+'DestWac',
+
+'CRSDepTime',
+'DepTime',
+'DepDelay',
+'DepDelayMinutes',
+'DepDel15',
+'DepartureDelayGroups',
+'DepTimeBlk',
+'TaxiOut',
+'WheelsOff',
+
+'WheelsOn',
+'TaxiIn',
+'CRSArrTime',
+'ArrTime',
+'ArrDelay',
+'ArrDelayMinutes',
+'ArrDel15',
+'ArrivalDelayGroups',
+'ArrTimeBlk',
+
+'Cancelled',
+'CancellationCode',
+'Diverted',
+
+'CRSElapsedTime',
+'ActualElapsedTime',
+'AirTime',
+'Flights',
+'Distance',
+'DistanceGroup',
+
+'CarrierDelay',
+'WeatherDelay',
+'NASDelay',
+'SecurityDelay',
+'LateAircraftDelay',
+
+'FirstDepTime',
+'TotalAddGTime',
+'LongestAddGTime',
+
+'DivAirportLandings',
+'DivReachedDest',
+'DivActualElapsedTime',
+'DivArrDelay',
+'DivDistance',
+'Div1Airport',
+'Div1AirportID',
+'Div1AirportSeqID',
+'Div1WheelsOn',
+'Div1TotalGTime',
+'Div1LongestGTime',
+'Div1WheelsOff',
+'Div1TailNum',
+'Div2Airport',
+'Div2AirportID',
+'Div2AirportSeqID',
+'Div2WheelsOn',
+'Div2TotalGTime',
+'Div2LongestGTime',
+'Div2WheelsOff',
+'Div2TailNum',
+'Div3Airport',
+'Div3AirportID',
+'Div3AirportSeqID',
+'Div3WheelsOn',
+'Div3TotalGTime',
+'Div3LongestGTime',
+'Div3WheelsOff',
+'Div3TailNum',
+'Div4Airport',
+'Div4AirportID',
+'Div4AirportSeqID',
+'Div4WheelsOn',
+'Div4TotalGTime',
+
+]
 
 from time import sleep   
 def waitDownload(s=1):
@@ -212,11 +322,11 @@ def isDownloadFinished():
     return True
 
 
-def downloadAll(niceness=1,proc=True):
+def downloadAll(niceness=1,proc=True,varsList=default_fields):
     geo='All'
     for ayr in f2c2e['XYEAR']:
         for amo in f2c2e['FREQUENCY']:
-            download(ayr,amo,geo=geo,wait=True)
+            download(ayr,amo,geo=geo,wait=True,varsList=varsList)
             if proc==True: procDownloads()
             sleep(niceness)
     return
