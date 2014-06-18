@@ -18,7 +18,7 @@ import csv
 import pandas as pd
 
 
-from loaddata.types import make_typesDict as mtd
+#from loaddata.types import make_typesDict as mtd
 #td=mtd('numpy') useless here i think
 
 import numpy as np
@@ -31,11 +31,15 @@ def loadCSVs(**kwargs):
     for atbl,csvfiles in walker:
         for acsvfn in csvfiles:
             csvr=pd.read_csv(acsvfn
-                             ,delimiter=',',dtype='S10')
+                             ,delimiter=','
+                             ,dtype='U',encoding='latin') # b/c of garbage data
             #extra comma at end of each file making a new column
             csvr.drop(csvr.columns[-1],axis=1,inplace=True)#
-            csvr.to_sql(atbl,ldb.get_cursor().connection
+			#todo problem appears to be if atbl begins with
+			#a number. need to make it a letter
+            print 'loading',atbl,acsvfn
+            csvr.to_sql('T'+atbl,ldb.get_cursor().connection
                         ,**kwargs)
-            #
+
                 
     
