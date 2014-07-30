@@ -1,0 +1,8 @@
+# ignore everything
+*
+
+# except
+!.gitignore
+!.SyncIgnore
+#let's have readme's in the data dir source controlled (see syncingore)
+!readme*
