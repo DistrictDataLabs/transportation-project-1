@@ -1,8 +1,8 @@
-setup
+files setup
 =====
 
-data dir is shared across members. 
+We have to manage source and data. Data is shared (for example bittorent sync). Source is managed on github of course.
 
-1. get data dir (using bittorent sync for example)
-2. set data_dir in project src. probably best to just make it a subfolder as is so in the source
-3. make the data_dir the shared folder. copy it in its place or link to it.
+1. clone this source
+2. get (shared) data (using bittorent sync for example)
+3. set data_dir in project src to this  data. probably best to just make it a subfolder as is so in the source. if you are using bittorent sync, keep the syncignore in the source.
