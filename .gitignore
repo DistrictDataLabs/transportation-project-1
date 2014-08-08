@@ -47,3 +47,6 @@ coverage.xml
 
 # Sphinx documentation
 docs_build
+
+#data folder
+data_store/
