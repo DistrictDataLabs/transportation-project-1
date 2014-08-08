@@ -49,4 +49,4 @@ coverage.xml
 docs_build
 
 #data folder
-data_store
+data_store/
