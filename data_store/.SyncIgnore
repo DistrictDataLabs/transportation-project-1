@@ -15,8 +15,6 @@ Thumbs.db
 
 *.tmp
 
-#specific
-pw
 
 #dbs
 load.sqlite3
@@ -24,9 +22,12 @@ load.sqlite3
 #input text files
 *.txts.7z
 
-
+#top level test
 /testignore
 \testignore
+#at any level
+dontsync*
+dontsync*
 
 #readmes are source controlled so don't sync them (see gitignore)
 readme.*
