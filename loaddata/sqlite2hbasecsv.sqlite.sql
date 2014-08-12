@@ -4,6 +4,7 @@
 run as:
 sqlite3 loaddb --init thisfile > output
 */
-.mode csv
+/*.mode csv */
+.separator '|'
 .header off
 select ROWID,* from T887e3aca3c;
