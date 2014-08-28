@@ -5,14 +5,11 @@ import os
 
 class db(object):
 
-    def __init__(self,path,**kwargs):
-        self.path=path
-        if self.is_exists(path) is not True:
-            raise ValueError('no db found')
+    def __init__(self,*args,**kwargs):
+        return
 
-    @staticmethod
-    def is_exists(path):
-        return os.path.exists(path)
+    def is_exists(self,*args,**kwargs):
+        raise NotImplementedError
 
     def get_cursor(self,*args,**kwargs):
         raise NotImplementedError
@@ -33,10 +30,22 @@ class sql(db):
         """cmd to exec sql statements"""
         raise NotImplementedError
         
+
+
     
 class sqlite3(sql):
 
     myext='sqlite3'
+
+    def __init__(self,path,**kwargs):
+        self.path=path
+        if self.is_exists(path) is not True:
+            raise ValueError('no db found')
+
+    @staticmethod
+    def is_exists(path):
+        return os.path.exists(path)
+    
 
     def exec_script(self,script):
         cur=self.get_cursor()

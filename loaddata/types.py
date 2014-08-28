@@ -7,17 +7,21 @@ types_file=os.path.abspath(types_file)
 typedata=[]
 varNames=[]
 with open(types_file) as tf:
-    systems=dict.fromkeys(tf.readline().split()[1:])
+    systems=dict.fromkeys(tf.readline()\
+                          .replace('\t','').replace('\n','')
+                          .split('|')[1:])
     for aline in tf:
-        sl=aline.split()
+        if aline[0]=='#':continue
+        sl=aline.replace('\t','').replace('\n','').split('|')
         typedata.append(sl)
         varNames.append(sl[0])
+del aline;
     
 si=1
 for asys in systems:
     systems[asys]=si
     si+=1
-del si
+del si;del asys;
 
 def get_type(avar,asystem):
     for aline in typedata:
