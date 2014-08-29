@@ -46,6 +46,8 @@ def gen_create_flights_table(engine='InfiniDB'):
     return ctc
 
 if __name__=='__main__':
+    """run this with python -m loaddata.transportation.
+    pipe into mysql interpreter"""
     import sys
     try: tablenm=sys.argv[1]
     except: tablenm='flights'
