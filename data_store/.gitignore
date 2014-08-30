@@ -7,7 +7,8 @@
 .SyncArchive
 .SyncID
 
-#dont ignore
-#!.gitignore should exclude itself. chk
+#gitignore excludes itself but let's be explicit
+!.gitignore
+
 #let's have readme's in the data dir source controlled (see syncingore)
 !readme.*
