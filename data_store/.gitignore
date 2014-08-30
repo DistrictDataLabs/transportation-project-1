@@ -1,8 +1,13 @@
 # ignore everything
 *
+#but don't ignore subdir so we can recurse into them
+!*/
 
-# except
-!.gitignore
-!.SyncIgnore
+#but still ignore BTSycn special files
+.SyncArchive
+.SyncID
+
+#dont ignore
+#!.gitignore should exclude itself. chk
 #let's have readme's in the data dir source controlled (see syncingore)
-!readme*
+!readme.*

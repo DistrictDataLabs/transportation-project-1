@@ -12,11 +12,9 @@ ehthumbs.db
 desktop.ini
 Thumbs.db
 
-
 *.tmp
 
-
-#dbs
+#DBs
 load.sqlite3
 
 #input text files
@@ -29,7 +27,9 @@ load.sqlite3
 dontsync*
 dontsync*
 
-#readmes are source controlled so don't sync them (see gitignore)
-readme.*
+.gitignore
 
-#end
+#readmes are source controlled so don't sync them (see gitignore)s
+readme.* 
+
+
