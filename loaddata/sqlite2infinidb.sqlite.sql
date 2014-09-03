@@ -8,3 +8,5 @@ sqlite3 loaddb --init thisfile > output
 .separator '|'
 .header off
 select * from T887e3aca3c;
+/* need to exit to get a EOF */
+.quit
