@@ -16,6 +16,12 @@ files={'bts_sqlt3': os.path.join(dirs['data_store']
                                  ,'data','scraped','bts','load.sqlite3')
                             }
 
+dbs={'mysql':\
+{'host':'127.0.0.1','port':'3306'
+,'user':'root','pw':''
+,'db':'transportation'}
+}
+							
 def __init__(abs_path=True):
     
     for arsrc in dirs:
