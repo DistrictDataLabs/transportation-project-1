@@ -1,5 +1,7 @@
 variable			|sqlite		|numpy		|mysql
-#no space after var name. tab into next col
+#no space after var name.
+#tab into next col.
+#space lines with just a return
 
 #note reserved default type
 DEFAULT_DTYPE		|TEXT		|str		|CHAR(100)
@@ -17,32 +19,32 @@ UNIQUE_CARRIER		|TEXT		|str		|CHAR(10)
 AIRLINE_ID			|TEXT		|str		|CHAR(10)
 CARRIER				|TEXT		|str		|CHAR(10)
 TAIL_NUM			|TEXT		|str		|CHAR(10)
-FLIGHT_NUM			|TEXT		|str		|CHAR(10)
+FL_NUM				|TEXT		|str		|CHAR(10)
 
 #origin
-ORIGIN_AIRPORT_ID	|TEXT		|int		|SMALLINT UNSIGNED
-ORIGIN_CITY_MARKET	|TEXT		|int		|SMALLINT UNSIGNED
+ORIGIN_AIRPORT_ID		|TEXT	|int		|SMALLINT UNSIGNED
+ORIGIN_CITY_MARKET_ID	|TEXT	|int		|SMALLINT UNSIGNED
 
 #dest
 DEST_AIRPORT_ID		|TEXT		|int		|SMALLINT UNSIGNED
-DEST_CITY_MARKET	|TEXT		|int		|SMALLINT UNSIGNED
+DEST_CITY_MARKET_ID	|TEXT		|int		|SMALLINT UNSIGNED
 
 #departure performance
 CRS_DEP_TIME		|TEXT		|str		|CHAR(4)
 DEP_TIME			|TEXT		|str		|CHAR(4)
 DEP_DELAY			|TEXT	 	|int		|INT
-DEP_DELAY_MINUTES	|TEXT		|int		|INT UNSIGNED
+DEP_DELAY_NEW		|TEXT		|int		|INT UNSIGNED
 DEP_DEL15			|TEXT		|int		|TINYINT UNSIGNED
-DEP_DELAY_GROUPS	|TEXT		|int		|TINYINT
+DEP_DELAY_GROUP		|TEXT		|int		|TINYINT
 DEP_TIME_BLK		|TEXT		|str		|CHAR(9)
 
 #arr perf
 CRS_ARR_TIME		|TEXT		|str		|CHAR(4)
 ARR_TIME			|TEXT		|str		|CHAR(4)
 ARR_DELAY			|TEXT	 	|int		|INT
-ARR_DELAY_MINUTES	|TEXT		|int		|INT UNSIGNED
+ARR_DELAY_NEW		|TEXT		|int		|INT UNSIGNED
 ARR_DEL15			|TEXT		|int		|TINYINT UNSIGNED
-ARR_DELAY_GROUPS	|TEXT		|int		|TINYINT
+ARR_DELAY_GROUP		|TEXT		|int		|TINYINT
 ARR_TIME_BLK		|TEXT		|str		|CHAR(9)
 
 #cancellations and diversions

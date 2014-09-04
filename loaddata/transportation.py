@@ -30,7 +30,7 @@ def gen_create_flights_table(engine='InfiniDB'):
     for adt in td:
         if (adt not in cols) and (adt != 'DEFAULT_DTYPE'):
             raise ValueError\
-                     ('data type '+adt+ ' does not corespond to a col')
+                     ('data type '+adt+ ' does not correspond to a col')
 
     typestr=''
     for acol in cols:

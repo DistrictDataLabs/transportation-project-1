@@ -11,7 +11,7 @@ with open(types_file) as tf:
                           .replace('\t','').replace('\n','')
                           .split('|')[1:])
     for aline in tf:
-        if aline[0]=='#':continue
+        if aline[0]=='#' or aline[0]=='\n':continue
         sl=aline.replace('\t','').replace('\n','').split('|')
         typedata.append(sl)
         varNames.append(sl[0])
