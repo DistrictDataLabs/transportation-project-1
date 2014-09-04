@@ -21,13 +21,27 @@ def get_table_info(tbl_nm):
 from sqlalchemy.sql import and_,select
 from sqlalchemy import Table
 flights=md.tables['flights']
+
+
 def select_flights(origin,dest,analysis_columns
                    ,whereclause=[]):
     """mixNmatch strings with sqlalchemy objs in the args"""
-    return select(analysis_columns\
-      ,and_(flights.c.ORIGIN==origin,flights.c.DEST==dest,*whereclause))
-    
-    
+    return flights.select(analysis_columns\
+      ,and_(flights.c.ORIGIN==origin,flights.c.DEST==dest
+            ,*whereclause))
+
+
+
+# def sql_dec(func_returning_sqlable):
+#     """takes in a sqlalchemy statement obj and gives a sql str"""
+#     def sqlw(*args,**kwargs):
+#         return str(literalquery(func_returning_sqlable(*args,**kwargs)))
+#     return sqlw
+#>>to sql.py
+#sql_dec(select_flights) instend of the following
+# def select_flights_sql(*args,**kwargs):
+#     return str(literalquery(select_flights(*args,**kwargs)))
+
 
 from datetime import datetime
 from decimal import Decimal
