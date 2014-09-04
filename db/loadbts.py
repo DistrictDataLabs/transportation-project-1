@@ -1,3 +1,4 @@
+##too complicated. should have just stuck with sqlalchemy
 
 from resources import dirs
 import os
