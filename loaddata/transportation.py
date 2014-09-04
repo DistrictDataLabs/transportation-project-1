@@ -22,7 +22,7 @@ def get_flight_vars(tblName='T887e3aca3c'):
         yield ar[1]
 
 from loaddata.types import make_typesDict
-def gen_create_flights_table(engine='InfiniDB'):
+def gen_create_flights_table(engine='InfiniDB',name='flights'):
     cols=list(get_flight_vars())
     td=make_typesDict('mysql')
 
@@ -40,7 +40,7 @@ def gen_create_flights_table(engine='InfiniDB'):
         
     typestr=typestr[:-1]# take out last comma
     
-    ctc='create table flights ( ' + typestr + ') '\
+    ctc='create table '+name+' ( ' + typestr + ') '\
       +' engine='+engine  \
       + ';'
     return ctc
@@ -51,6 +51,8 @@ if __name__=='__main__':
     import sys
     try: tablenm=sys.argv[1]
     except: tablenm='flights'
+    try: flt_tblnm=sys.argv[2]
+    except: flt_tblnm='flights'
 
     if tablenm == 'flights':
-        print gen_create_flights_table()
+        print gen_create_flights_table(name=flt_tblnm)
