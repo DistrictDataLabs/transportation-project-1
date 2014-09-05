@@ -6,7 +6,6 @@ of the analysis/modeling
 #i/o grp + transformation = analysis group
 
 
-
 def io_grps():
     import os
     #io variables file
@@ -16,18 +15,18 @@ def io_grps():
     iof.seek(0)
     rdr=csv.DictReader(filter(lambda row: not(row[0]==',' or row[0]=='#'  )
                               , iof))
-    grps=dict.fromkeys(grp_names,set())
+    grps=dict.fromkeys(grp_names,[])#set().copy()) #use list?
+    for agrp in grps: grps[agrp]=set()
     for aline in rdr:
-        print aline
         iov=aline['var']
         for agrp in grp_names:
             if 'x' in aline[agrp]:
-                grps[agrp].add(iov)
+                grps[agrp].add(iov) #list?
     return grps
     
 
 
-from db.sql import sql_dec
+from db.sql import sql_dec #col can be processed
 def select_flights(origin,dest,analysis_columns
                    ,whereclause=[]):
     """mixNmatch strings with sqlalchemy objs in the args"""
