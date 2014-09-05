@@ -22,11 +22,3 @@ from sqlalchemy.sql import and_,select
 from sqlalchemy import Table
 flights=md.tables['flights']
 
-
-def select_flights(origin,dest,analysis_columns
-                   ,whereclause=[]):
-    """mixNmatch strings with sqlalchemy objs in the args"""
-    return flights.select(analysis_columns\
-      ,and_(flights.c.ORIGIN==origin,flights.c.DEST==dest
-            ,*whereclause))
-
