@@ -54,13 +54,18 @@ def _c(acol,grp):
 from sqlalchemy.sql import case
 #(UNIVAR) output analysis transformation
 def fo0():
-    """in flights is cancelled returns a special number (99) to go alone with delay groups"""
-    return [case( [(     flights.c[_c('CANCELLED',       'o0')]==1 , 99)] #if flight is cancelled
+    """in flights is cancelled returns a special number (13) to go alone with delay groups"""
+    return [case( [(     flights.c[_c('CANCELLED',       'o0')]==1 , 13)] #if flight is cancelled
                   ,else_=flights.c[_c('ARR_DELAY_GROUP', 'o0')]
                   )] #use it as an indicator...... in arr delay group
 def fo1():
     """use cancelled as a predictor"""
     return [             flights.c[_c('CANCELLED',       'o1')]   ]
+def fo2():
+    """ANY delay..can delay be predicted at all?"""
+    return [case( [(     flights.c[_c('ARR_DELAY_GROUP', 'o0')]>1 , 1)] 
+                  ,else_=                                           0 
+                  )] #
 def fi0():
     """just returns the group w/o transforming anything"""
     fvars=[]
@@ -71,12 +76,12 @@ def fi0():
 
 #association b/w functions and io grps
 fi={'i0':fi0}
-fo={'o0':fo0,'o1':fo1}
-    
-def analysis_tbl(origin,dest,input_grp,output_grp):
+fo={'o0':fo0,'o1':fo1,'o2':fo2}
+
+def analysis_tbl(origin,dest,input_grp,output_grp,**kwargs):
     """makes a table with the first col as the output"""
     analysis_cols=fo[output_grp]()+fi[input_grp]()
-    return select_flights(origin,dest,analysis_cols)
+    return select_flights(origin,dest,analysis_cols,**kwargs)
 
 if __name__=='__main__':
     """output the sql for the table that will be analyzed
