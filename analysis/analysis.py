@@ -8,12 +8,17 @@ from pandas import read_sql as rsql
 from db.transportation import engine
 
 def XY():
-    at=analysis_tbl('DCA','JFK','i0','o2',whereclause=[flights.c.YEAR>2005])
+    at=analysis_tbl('DCA','JFK','i0','o2',whereclause=[
+        flights.c.YEAR> 2005
+        #,flights.c.FL_NUM=='3365' #
+        ])
+    #return at
     tbl=rsql(str(lq(at)),engine.raw_connection())
     tbl.dropna(subset=tbl.columns,how='any',inplace=True)
     yl=['anon_1']
     xl=list(set(tbl.columns)-set(yl))
-    return tbl[xl],tbl[yl]
+    x,y= tbl[xl],tbl[yl]
+    return x,y.values.T[0]
 
 
 def labele(tbl,cols='all'):
@@ -37,3 +42,41 @@ from sklearn.ensemble import RandomForestClassifier as RFC
 from sklearn import svm
 from sklearn import preprocessing as pp
 rfc=RFC(n_estimators=50)
+
+x,y=XY()
+x=labele(x)
+xtrn,xtst,ytrn,ytst=xv.train_test_split(x,y,test_size=.15)
+clf=rfc.fit(xtrn,ytrn)
+
+# RandomForestClassifier(bootstrap=True, compute_importances=None,
+#             criterion='gini', max_depth=None, max_features='auto',
+#             max_leaf_nodes=None, min_density=None, min_samples_leaf=1,
+#             min_samples_split=2, n_estimators=100, n_jobs=1,
+#             oob_score=False, random_state=None, verbose=0)
+
+# In [19]: clf.score(xtst, ytst)
+# Out[19]: 0.82857682857682857
+
+# In [20]: print classification_report( ytst , clf.predict((xtst) ))
+#              precision    recall  f1-score   support
+
+#           0       0.85      0.97      0.90      4395
+#           1       0.48      0.14      0.22       896
+
+
+
+# In [24]: clf=DummyClassifier(strategy='stratified')
+
+
+# In [26]: clf.fit(xtrn, (ytrn))
+# Out[26]: DummyClassifier(constant=None, random_state=None, strategy='stratifi
+# )
+
+# In [27]: print classification_report( ytst , clf.predict((xtst) ))
+#              precision    recall  f1-score   support
+
+#           0       0.83      0.84      0.83      4395
+#           1       0.18      0.18      0.18       896
+
+# avg / total       0.72      0.72      0.72      5291
+# avg / total       0.79      0.83      0.79      5291
