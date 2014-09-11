@@ -25,17 +25,19 @@ def get_io_grps():
     return grps
     
 from sqlalchemy import select
-from sqlalchemy.sql import and_
+from sqlalchemy.sql import and_,or_
 from db.sql import sql_dec #col can be processed
 from db.transportation import flights
 
-def select_flights(origin,dest,analysis_columns
+def select_flights(analysis_columns
                    ,whereclause=[]):
     """mixNmatch strings with sqlalchemy objs in the args"""
     return select( analysis_columns \
-      ,and_(flights.c.ORIGIN==origin, flights.c.DEST==dest
+                   #, (flights.c.ORIGIN=='JFK') | (flights.c.DEST=='LAX')
+      #,and_(flights.c.ORIGIN=='JFK' # flights.c.ORIGIN=='LAX'
+            #, flights.c.DEST==dest
             ,*whereclause
-            )
+            #)
             )
 
 io_grps=get_io_grps()
@@ -78,10 +80,10 @@ def fi0():
 fi={'i0':fi0}
 fo={'o0':fo0,'o1':fo1,'o2':fo2}
 
-def analysis_tbl(origin,dest,input_grp,output_grp,**kwargs):
+def analysis_tbl(input_grp,output_grp,**kwargs):
     """makes a table with the first col as the output"""
     analysis_cols=fo[output_grp]()+fi[input_grp]()
-    return select_flights(origin,dest,analysis_cols,**kwargs)
+    return select_flights(analysis_cols,**kwargs)
 
 if __name__=='__main__':
     """output the sql for the table that will be analyzed

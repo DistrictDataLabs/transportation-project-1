@@ -7,12 +7,20 @@ from db.sql import literalquery as lq
 from pandas import read_sql as rsql
 from db.transportation import engine
 
+airports=['JFK','DCA'
+          ,'IAD','ATL']#should really use airport id
+          #no need for more data. it doesn't help
+
+
+from sqlalchemy.sql import and_,or_
+
 def XY():
-    at=analysis_tbl('DCA','JFK','i0','o2',whereclause=[
-        flights.c.YEAR> 2005
-        #,flights.c.FL_NUM=='3365' #
+    at=analysis_tbl('i0','o2',whereclause=[ #basically filters
+        (flights.c.YEAR> 2005)
+        & or_(*[(flights.c.ORIGIN==aa) for aa in airports]) #python is awesome
+        & or_(*[(flights.c.DEST  ==aa) for aa in airports]) #
+        
         ])
-    #return at
     tbl=rsql(str(lq(at)),engine.raw_connection())
     tbl.dropna(subset=tbl.columns,how='any',inplace=True)
     yl=['anon_1']
@@ -26,7 +34,7 @@ def labele(tbl,cols='all'):
     if cols=='all':cols=tbl.columns
     le=LE()
     for ac in tbl.columns:
-        tbl.loc[:,ac]=le.fit(tbl[ac]).transform(tbl[ac])
+        tbl.loc[:,ac]=le.fit(tbl[ac]).transform(tbl[ac]) #might have to return le
     return tbl
 
 # from sklearn.pipeline import Pipeline
@@ -47,6 +55,8 @@ x,y=XY()
 x=labele(x)
 xtrn,xtst,ytrn,ytst=xv.train_test_split(x,y,test_size=.15)
 clf=rfc.fit(xtrn,ytrn)
+
+from sklearn.metrics import classification_report,confusion_matrix
 
 # RandomForestClassifier(bootstrap=True, compute_importances=None,
 #             criterion='gini', max_depth=None, max_features='auto',
